@@ -4,6 +4,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class VinylController extends AbstractController
 {
    
@@ -19,10 +20,25 @@ class VinylController extends AbstractController
             ['song' => 'Fantasy', 'artist' => 'Mariah Carey'],
         ];
 
-        dump($tracks);
-       return $this->render('vinyl/homepage.html.twig',[
+
+        return $this->render('vinyl/homepage.html.twig',[
         'title'=> 'PB & Jams',
         'tracks'=> $tracks]);
+    }
+
+    #[Route('/browse/{slug}')]
+    public function browse($slug=null): Response
+    {
+        // if ($slug) {
+        //     $genre = 'Genre: '.(str_replace('-', ' ', $slug))->title(true);
+        // } else {
+        //     $genre = 'All Genres';
+        // }
+
+        $genre = $slug ? str_replace('-', ' ', $slug)->title(true) : null;
+        return $this->render('vinyl/browse.html.twig',[
+            'genre' => $genre
+        ]);
     }
 }
 
